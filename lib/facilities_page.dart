@@ -68,14 +68,16 @@ class FacilityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentDayOfWeek = DateTime.now().weekday;
     final openingHoursForToday = facility.openingHours[currentDayOfWeek];
+    final backgroundColor = Theme.of(context).cardColor;
 
     return Card(
       elevation: 0, // Remove gray shadow
+      color: backgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: 80,  // Set fixed width for gym image
               height: 80, // Set fixed height for gym image
               child: Image.network(
@@ -90,7 +92,7 @@ class FacilityCard extends StatelessWidget {
                 children: [
                   Text(
                     facility.name,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
@@ -102,8 +104,8 @@ class FacilityCard extends StatelessWidget {
                   ),
                   if (openingHoursForToday != null)
                     Text(
-                      'Hours today: ${openingHoursForToday}',
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                      'Hours today: $openingHoursForToday',
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                 ],
               ),

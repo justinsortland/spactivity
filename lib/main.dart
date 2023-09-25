@@ -3,7 +3,6 @@ import 'package:SPACtivity/favorite_facility_notifier.dart';
 import 'package:SPACtivity/text_scale_factor_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'constants.dart';
 import 'gym_detail_page.dart';
 import 'gym.dart';
 import 'custom_app_bar.dart';
@@ -208,9 +207,6 @@ class SPACtivityApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final darkModeNotifier = Provider.of<DarkModeNotifier>(context);
-    final isDarkModeEnabled = darkModeNotifier.isDarkModeEnabled;    
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -278,7 +274,7 @@ class SPACtivityApp extends StatelessWidget {
                     facility: facility,
                     onDetailPageChanged: (isOnDetailPage) {}),
                 );
-              };
+              }
               // Handle other name routes here, if needed
               return null;
             },
@@ -355,7 +351,7 @@ class GymCard extends StatelessWidget {
     // final currentTime = TimeOfDay.now();
     final currentDayOfWeek = DateTime.now().weekday;
     final openingHoursForToday = gym.openingHours[currentDayOfWeek];
-    final textColor = Theme.of(context).textTheme.bodyText1!.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
     final backgroundColor = Theme.of(context).cardColor;
 
     return Card(
@@ -365,7 +361,7 @@ class GymCard extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: 80,  // Set fixed width for gym image
               height: 80, // Set fixed height for gym image
               child: Image.network(
@@ -381,7 +377,7 @@ class GymCard extends StatelessWidget {
                   Text(
                     gym.name,
                     style: TextStyle(
-                      fontSize: 20, 
+                      fontSize: 22, 
                       fontWeight: FontWeight.bold,
                       color: textColor,
                     ),
@@ -396,8 +392,8 @@ class GymCard extends StatelessWidget {
                   ),
                   if (openingHoursForToday != null)
                     Text(
-                      'Hours today: ${openingHoursForToday}',
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                      'Hours today: $openingHoursForToday',
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                 ],
               ),

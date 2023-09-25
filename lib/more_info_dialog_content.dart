@@ -1,9 +1,10 @@
+import 'package:SPACtivity/constants.dart';
 import 'package:flutter/material.dart';
 
 class MoreInfoDialogContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final appVersion = '1.0.0'; 
+    const appVersion = '1.0.0'; 
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,6 +40,14 @@ class MoreInfoDialogContent extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop(); // Close dialog
             },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: NorthwesternPurple,
+              textStyle: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
             child: Text('Close'),
           ),
         ),

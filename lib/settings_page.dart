@@ -1,11 +1,9 @@
 import 'package:SPACtivity/constants.dart';
 import 'package:SPACtivity/favorite_equipment_notifier.dart';
 import 'package:SPACtivity/more_info_dialog_content.dart';
-import 'favorite_equipment_notifier.dart';
 import 'favorite_facility_notifier.dart';
 import 'favorite_gym_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'custom_app_bar.dart';
 import 'package:SPACtivity/custom_bottom_navigation_bar.dart';
@@ -200,7 +198,7 @@ class SettingsPage extends StatelessWidget {
                       favoriteEquipmentNotifier.clearFavorites();
                       favoriteFacilityNotifier.clearFavorites();
                       favoriteGymNotifier.clearFavorites();
-                      PaintingBinding.instance!.imageCache!.clear();
+                      PaintingBinding.instance.imageCache.clear();
 
                       // Show notification
                       ScaffoldMessenger.of(context).showSnackBar(

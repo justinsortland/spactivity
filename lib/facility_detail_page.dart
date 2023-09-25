@@ -91,6 +91,7 @@ class _FacilityDetailPageState extends State<FacilityDetailPage> {
                               Text(
                                 isFavorite ? 'Favorited' : 'Favorite',
                                 style: TextStyle(
+                                  fontSize: 18,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -107,31 +108,56 @@ class _FacilityDetailPageState extends State<FacilityDetailPage> {
                   widget.facility.isOpenNow(context) ? 'Open' : 'Closed',
                   style: TextStyle(
                     fontSize: 24,
+                    fontWeight: FontWeight.bold,
                     color: widget.facility.isOpenNow(context) ? Colors.green : Colors.red,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 16),
                 ExpansionTile(
-                  title: Text('Tap to view hours'),
+                  title: Text(
+                    'Tap to view hours',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   children: [
                     for (int day = 1; day <= 7; day++)
                       if (widget.facility.openingHours.containsKey(day))
                         ListTile(
-                          title: Text(getDayName(day)),
-                          subtitle: Text(widget.facility.openingHours[day]!),
+                          title: Text(
+                            getDayName(day),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            widget.facility.openingHours[day]!,
+                            style: TextStyle(fontSize: 16),
+                          ),
                           dense: true,
                           contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                         ),
                   ],
                 ),
                 SizedBox(height: 16),
-                Center(
+                Center( // Center the "See on Map" button
                   child: ElevatedButton(
                     onPressed: () {
                       // TODO: Implement navigation to the map page
                     },
-                    child: Text('See on Map'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: NorthwesternPurple,
+                    ),
+                    child: Text(
+                      'See on Map',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ],

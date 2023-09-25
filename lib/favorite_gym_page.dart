@@ -39,7 +39,12 @@ class FavoriteGymPage extends StatelessWidget {
               itemCount: favoriteGymNotifier.favoriteGyms.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(favoriteGymList[index].name), 
+                  title: Text(
+                    favoriteGymList[index].name,
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ), 
                 );
               },
             ),

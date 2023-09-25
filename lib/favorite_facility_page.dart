@@ -39,7 +39,12 @@ class FavoriteFacilityPage extends StatelessWidget {
               itemCount: favoriteFacilityList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(favoriteFacilityList[index].name),
+                  title: Text(
+                    favoriteFacilityList[index].name,
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
                   // Add onTap functionality if needed
                 );
               },

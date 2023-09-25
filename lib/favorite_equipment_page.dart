@@ -40,7 +40,12 @@ class FavoriteEquipmentPage extends StatelessWidget {
               itemCount: favoriteEquipmentList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(favoriteEquipmentList[index].name),
+                  title: Text(
+                    favoriteEquipmentList[index].name,
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
                 );
               },
             ),

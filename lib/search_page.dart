@@ -90,7 +90,12 @@ class _SearchPageState extends State<SearchPage> {
                 return GestureDetector(
                   onTap: () => handleEquipmentTap(equipment),
                   child: ListTile(
-                    title: Text(equipment.name),
+                    title: Text(
+                      equipment.name,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
                 );
               },
