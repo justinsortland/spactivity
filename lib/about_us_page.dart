@@ -25,7 +25,7 @@ class AboutUsPage extends StatelessWidget {
             ),
             SizedBox(height: 16),
             Text(
-              'This is not an official NU app and isn''t affiliated with Northwestern University in any way. Elements of the design were inspired by MEats by Kevin Wang.',
+              'This is not an official NU app and isn''t affiliated with Northwestern University in any way.',
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 16),

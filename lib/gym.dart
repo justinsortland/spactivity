@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'equipment.dart';
 
 class Gym {
@@ -9,6 +8,8 @@ class Gym {
   final String image;
   final bool requiresKeycard;
   final List<Equipment> equipmentList;
+  final String googleMapsUrl;
+  final String appleMapsUrl;
 
   Gym({
     required this.id,
@@ -16,49 +17,10 @@ class Gym {
     required this.openingHours,
     required this.image, 
     required this.requiresKeycard,
-    required this.equipmentList
+    required this.equipmentList,
+    required this.googleMapsUrl,
+    required this.appleMapsUrl,
   });
-
-  String getOpeningHoursForToday() {
-    // Get current day of the week (1: Monday, 2: Tuesday, ... , 7: Sunday)
-    final currentTime = DateTime.now();
-
-    final currentDay = currentTime.weekday;
-
-    final openingHoursForToday = openingHours[currentDay];
-
-    if (openingHoursForToday == null) {
-      return 'Closed';
-    } else {
-      // Parse opening hours string
-      final openingHoursList = openingHoursForToday.split(' - ');
-
-      // Parse opening and closing times 
-      final openingTimeCentral = DateFormat.jm().parse(openingHoursList[0]);
-      final closingTimeCentral = DateFormat.jm().parse(openingHoursList[1]);
-
-      final openingTimeLocal = DateTime(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        openingTimeCentral.hour,
-        openingTimeCentral.minute,
-      );
-
-      final closingTimeLocal = DateTime(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        closingTimeCentral.hour,
-        closingTimeCentral.minute,
-      );
-
-      final formattedOpeningTime = DateFormat.jm().format(openingTimeLocal);
-      final formattedClosingTime = DateFormat.jm().format(closingTimeLocal);
-
-      return '$formattedOpeningTime - $formattedClosingTime';
-    }
-  }
 
   bool isOpenNow(context) {
     // Get current day of the week (1: Monday, 2: Tuesday, ... , 7: Sunday)
@@ -106,36 +68,6 @@ class Gym {
     } else if (!isPM && hour == 12) {
       hour = 0;
     }
-
-    return DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-      hour,
-      minute,
-    );
-  }
-
-  DateTime _parseTimeWithTimeZoneOffset(String timeStr) {
-    final timeParts = timeStr.split(' ');
-    final time = timeParts[0];
-    final isPM = timeParts[1] == 'PM';
-
-    final parts = time.split(':');
-    var hour = int.parse(parts[0]);
-    final minute = int.parse(parts[1]);
-
-    if (isPM && hour != 12) {
-      hour += 12;
-    } else if (!isPM && hour == 12) {
-      hour = 0;
-    }
-
-    // Get device's time zone offset in hours
-    final timeZoneOffsetHours = DateTime.now().timeZoneOffset.inHours;
-
-    // Adjust hour based on time zone offset
-    hour -= timeZoneOffsetHours;
 
     return DateTime(
       DateTime.now().year,

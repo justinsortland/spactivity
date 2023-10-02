@@ -1,4 +1,5 @@
 import 'package:SPACtivity/dark_mode_notifier.dart';
+import 'package:SPACtivity/list_of_facilities.dart';
 import 'package:SPACtivity/favorite_facility_notifier.dart';
 import 'package:SPACtivity/text_scale_factor_notifier.dart';
 import 'package:flutter/material.dart';
@@ -19,157 +20,15 @@ import 'favorite_gym_page.dart';
 import 'facilities_page.dart';
 import 'facility.dart';
 import 'facility_detail_page.dart';
+import 'list_of_gyms.dart';
+import 'list_of_equipment.dart';
 
-final List<Gym> gymList = [
-  Gym(
-    id: '0',
-    name: 'Henry Crown Sports Pavilion (SPAC)',
-    openingHours: {
-      // Monday to Thursday
-      1: '6:00 AM - 11:00 PM',
-      2: '6:00 AM - 11:00 PM',
-      3: '6:00 AM - 11:00 PM', 
-      4: '6:00 AM - 11:00 PM',
-      // Friday
-      5: '6:00 AM - 10:00 PM',
-       // Saturday
-      6: '8:00 AM - 9:00 PM',
-      // Sunday
-      7: '8:00 AM - 10:00 PM',
-    },
-    image: 'assets/images/spac_image.png',
-    requiresKeycard: false,
-    equipmentList: [
-      Equipment(id: '0', name: '5 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    ]
-  ),
-  Gym(
-    id: '1',
-    name: 'Blomquist Recreation Center',
-    openingHours: {
-      // Monday to Friday
-      1: '6:00 AM - 9:00 PM',
-      2: '6:00 AM - 9:00 PM',
-      3: '6:00 AM - 9:00 PM', 
-      4: '6:00 AM - 9:00 PM',
-      5: '6:00 AM - 9:00 PM',
-      // Saturday and Sunday
-      6: '8:00 AM - 6:00 PM',
-      7: '8:00 AM - 10:00 PM',
-    },
-    image: 'assets/images/blomquist_image.png',
-    requiresKeycard: false,
-    equipmentList: [
-      Equipment(id: '0', name: '5 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    ]
-  ),
-  Gym(
-    id: '2',
-    name: 'Patten Gymnasium',
-    openingHours: {
-      // Monday to Thursday
-      1: '6:00 AM - 11:00 PM',
-      2: '6:00 AM - 11:00 PM',
-      3: '6:00 AM - 11:00 PM', 
-      4: '6:00 AM - 11:00 PM',
-      // Friday
-      5: '6:00 AM - 10:00 PM',
-      // Saturday
-      6: '8:00 AM - 9:00 PM',
-      // Sunday
-      7: '8:00 AM - 10:00 PM',
-    },
-    image: 'assets/images/patten_image.png',
-    requiresKeycard: false,
-    equipmentList: [
-      Equipment(id: '0', name: '5 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    ]
-  ),
-  Gym(
-    id: '3',
-    name: '1838 Chicago Residential Hall',
-    openingHours: {
-      // Monday to Thursday
-      1: '6:00 AM - 11:00 PM',
-      2: '6:00 AM - 11:00 PM',
-      3: '6:00 AM - 11:00 PM', 
-      4: '6:00 AM - 11:00 PM',
-      // Friday
-      5: '6:00 AM - 10:00 PM',
-      // Saturday
-      6: '8:00 AM - 9:00 PM',
-      // Sunday
-      7: '8:00 AM - 10:00 PM',
-    },
-    image: 'assets/images/1838_chicago_image.png',
-    requiresKeycard: true,
-    equipmentList: [
-      Equipment(id: '0', name: '5 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    ]
-  ),
-  Gym(
-    id: '4',
-    name: 'Willard Residential Hall',
-    openingHours: {
-      // Monday to Thursday
-      1: '6:00 AM - 11:00 PM',
-      2: '6:00 AM - 11:00 PM',
-      3: '6:00 AM - 11:00 PM', 
-      4: '6:00 AM - 11:00 PM',
-      // Friday
-      5: '6:00 AM - 10:00 PM',
-      // Saturday
-      6: '8:00 AM - 9:00 PM',
-      // Sunday
-      7: '8:00 AM - 10:00 PM',
-    },
-    image: 'assets/images/willard_image.png',
-    requiresKeycard: true,
-    equipmentList: [
-      Equipment(id: '0', name: '5 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    ]
-  ),
-];
+// Initialize lists 
+final List<Gym> gymList = ListOfGyms;
+final List<Equipment> equipmentList = ListOfEquipment;
+final List<Facility> facilityList = ListOfFacilities;
 
-final List<Equipment> equipmentList = [
-    Equipment(id: '0', name: '5 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '1', name: '10 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '2', name: '15 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '3', name: '20 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '4', name: '25 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '5', name: '30 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '6', name: '35 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '7', name: '40 lb Dummbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '8', name: '45 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '9', name: '50 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '10', name: '55 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '11', name: '60 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '12', name: '65 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '13', name: '70 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '14', name: '75 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-    Equipment(id: '15', name: 'Treadmill', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0']),
-  ];
-
-final List<Facility> facilityList = [
-  Facility(
-    id: '0', 
-    name: 'Protein Bar', 
-    openingHours: {
-      // Monday to Thursday
-      1: '9:00 AM - 7:00 PM',
-      2: '9:00 AM - 7:00 PM',
-      3: '9:00 AM - 7:00 PM',
-      4: '9:00 AM - 7:00 PM',
-      // Friday to Saturday
-      5: '9:00 AM - 6:00 PM',
-      6: '9:00 AM - 6:00 PM',
-      // Sunday
-      7: '10:00 AM - 5:00 PM',
-    },
-    image: 'assets/images/protein_bar_image.png',
-  ),
-];
-void main() {
+void main()  {
   runApp(
     MultiProvider(
       providers: [
@@ -348,7 +207,6 @@ class GymCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final currentTime = TimeOfDay.now();
     final currentDayOfWeek = DateTime.now().weekday;
     final openingHoursForToday = gym.openingHours[currentDayOfWeek];
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;

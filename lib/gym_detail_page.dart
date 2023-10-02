@@ -8,6 +8,7 @@ import 'custom_app_bar.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
+import 'package:url_launcher/url_launcher.dart';
 
 class GymDetailPage extends StatefulWidget {
   final Gym gym;
@@ -24,6 +25,12 @@ class GymDetailPage extends StatefulWidget {
 }
 
 class _GymDetailPageState extends State<GymDetailPage> {
+  // Define variable to store selected day of the week
+  int selectedDay = DateTime.now().weekday;
+
+  // Initialize list for bar chart data
+  final Map<int, List<BarChartGroupData>> dayDataMap = {};
+
   // Define some sample data for the bar graph (you can replace this with actual data)
   List<BarChartGroupData> generateBarChartData(Gym gym, int currentDay) {
     final List<BarChartGroupData> barChartData = [];
@@ -44,7 +51,7 @@ class _GymDetailPageState extends State<GymDetailPage> {
         timeLabels.add(time);
       } 
 
-      // Loop throuh each hour the gym is open on the current day
+      // Loop through each hour the gym is open on the current day
       for (var hour = 0; hour <= totalHours; hour++) {
         final isCurrentHour = currentTime.hour == (openingTime.hour + hour);
         final barGroupData = BarChartGroupData(
@@ -63,14 +70,60 @@ class _GymDetailPageState extends State<GymDetailPage> {
     return barChartData;
   }
 
+  List<BarChartGroupData> calculateWeeklyData() {
+    final weeklyData = List<BarChartGroupData>.filled(
+      7,
+      BarChartGroupData(x: 0, barRods: [BarChartRodData(y: 0.0)]),
+    );
+
+    final currentDayOfWeek = DateTime.now().weekday;
+    for (int day = 1; day <= 7; day++) {
+      double sum = 0.0;
+
+      if (dayDataMap.containsKey(day)) {
+        final dayData = dayDataMap[day]!;
+        for (final groupData in dayData) {
+          // Add bar heights to the corresponding day of the week
+          sum += groupData.barRods[0].y;
+        }
+      }
+
+      // Calculate average by dividing sum by 24 (assuming 24 hours in a day)
+      weeklyData[day - 1] = BarChartGroupData(
+        x: day - 1,
+        barRods: [
+          BarChartRodData(
+          y: sum / 16,
+          width: 16,
+          colors: [currentDayOfWeek == day ? Colors.red : Colors.blue],
+          ),
+        ],
+      );
+    }
+    return weeklyData;
+  }
+
   int getRandomTrafficValue() {
     // Replace this with logic to get actual traffic data for each hour
     return Random().nextInt(10) + 1;
   }
 
+  String getTimeLabelForIndex(int index) {
+    final List<String> timeLabels = ['5 AM', '6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM', '5 PM', '6 PM', '7 PM', '8 PM', '9 PM', '10 PM', '11 PM'];
+    if (index >= 0 && index < timeLabels.length) {
+      return timeLabels[index];
+    }
+    return '';
+  }
+
   @override
   void initState() {
     super.initState();
+
+    // Generate data for all days of the week
+    for (int day = 1; day <= 7; day++) {
+      dayDataMap[day] = generateBarChartData(widget.gym, day);
+    }
 
     // Notify search page about detail page status
     widget.onDetailPageChanged(true);
@@ -104,6 +157,29 @@ class _GymDetailPageState extends State<GymDetailPage> {
     }
   }
 
+  // Function to oppen Apple Maps (iOS) or Google Maps (Android)
+  void openMaps(Gym gym) async {
+
+    // Debug print to check the appleMapsUrl value
+    print('Apple Maps URL: ${gym.appleMapsUrl}');
+    // Debug print to check the appleMapsUrl value
+    print('Google Maps URL: ${gym.googleMapsUrl}');
+
+    // URL for Apple Maps (iOS)
+    final appleMapsUrl = gym.appleMapsUrl;
+
+    // URL for Google Maps (Android)
+    final googleMapsUrl = gym.googleMapsUrl;
+
+    if (await canLaunch(appleMapsUrl)) {
+      await launch(appleMapsUrl);
+    } else if (await canLaunch(googleMapsUrl)) {
+      await launch(googleMapsUrl);
+    } else {
+      throw 'Could not launch maps';
+    }
+  }
+ 
   @override
   Widget build(BuildContext context) { 
     final currentDate = DateTime.now();
@@ -206,7 +282,7 @@ class _GymDetailPageState extends State<GymDetailPage> {
                 Center( // Center the "See on Map" button
                   child: ElevatedButton(
                     onPressed: () {
-                      // TODO: Implement navigation to the map page
+                      openMaps(widget.gym);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: NorthwesternPurple,
@@ -230,6 +306,107 @@ class _GymDetailPageState extends State<GymDetailPage> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding:EdgeInsets.only(top: 8),
+                  child: Text(
+                    'Choose the day of the week which corresponds to the daily traffic you would like to see. Choose "Weekly" to see the overall traffic for each day of the week.',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8),
+                // Dropdown button for selecting the day of the week
+                DropdownButton<int>(
+                  value: selectedDay, 
+                  onChanged: (int? newValue) {
+                      setState(() {
+                        selectedDay = newValue!;
+                      });
+                  },
+                  items: <DropdownMenuItem<int>>[
+                    DropdownMenuItem<int>(
+                      value: 1, // Monday
+                      child: Text(
+                        'Monday',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    DropdownMenuItem<int>(
+                      value: 2, // Tuesday
+                      child: Text(
+                        'Tuesday',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    DropdownMenuItem<int>(
+                      value: 3, // Wednesday
+                      child: Text(
+                        'Wednesday',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    DropdownMenuItem<int>(
+                      value: 4, // Thursday
+                      child: Text(
+                        'Thursday',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    DropdownMenuItem<int>(
+                      value: 5, // Friday
+                      child: Text(
+                        'Friday',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    DropdownMenuItem<int>(
+                      value: 6, // Saturday
+                      child: Text(
+                        'Saturday',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    DropdownMenuItem<int>(
+                      value: 7, // Sunday
+                      child: Text(
+                        'Sunday',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    DropdownMenuItem<int>(
+                      value: 8, // Weekly
+                      child: Text(
+                        'Weekly',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 // TODO: Add traffic information here
                 SizedBox(height: 16),
                 AspectRatio(
@@ -252,30 +429,28 @@ class _GymDetailPageState extends State<GymDetailPage> {
                         bottomTitles: SideTitles(
                           showTitles: true,
                           getTitles: (double value) {
-                            if (widget.gym.openingHours.containsKey(currentDay)) {
-                              final openingHours = widget.gym.openingHours[currentDay]!.split(' - ');
-                              final openingTime = DateFormat.jm().parse(openingHours[0]);
-                              final closingTime = DateFormat.jm().parse(openingHours[1]);
-
-                              final List<String> timeLabels = [];
-                              for (var hour = openingTime.hour; hour <= closingTime.hour; hour += 3) {
-                                final hour12Format = hour % 12 == 0 ? 12 : hour % 12;
-                                final period = hour < 12 ? 'AM' : 'PM';
-                                final time = '$hour12Format $period';
-                                timeLabels.add(time);
+                            if (selectedDay == 8) {
+                              
+                              // Display days (Mon, Tue, Wed, etc.) for weekly view
+                              final List<String> dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                              final index = value.toInt();
+                              if (index >= 0 && index < dayLabels.length) {
+                                return dayLabels[index];
                               }
-          
-                              // Calculate corresponding index for current value
-                              final index = (value ~/ 3).toInt();
-
-                              if (index >= 0 && index < timeLabels.length) {
-                                return timeLabels[index];
+                            } else if (dayDataMap.containsKey(selectedDay)) {
+                              // Display times (7 AM, 8 AM, 9 AM, etc.) for individual days
+                              final List<BarChartGroupData> dayData = dayDataMap[selectedDay]!;
+                              final index = (value / 3).toInt();
+                              if (index >= 0 && index < dayData.length) {
+                                final barGroup = dayData[index];
+                                final timeLabel = getTimeLabelForIndex(barGroup.x);
+                                return timeLabel;
                               }
                             }
                             return '';
                           },
                           margin: 8,
-                          interval: 3,
+                          interval: selectedDay == 8 ? 1 : 3,
                         ),
                         rightTitles: SideTitles(showTitles: false),
                         topTitles: SideTitles(showTitles: false),
@@ -295,7 +470,7 @@ class _GymDetailPageState extends State<GymDetailPage> {
                           top: BorderSide.none,
                         ),
                       ),
-                      barGroups: generateBarChartData(widget.gym, currentDay),
+                      barGroups: selectedDay == 8 ? calculateWeeklyData() : dayDataMap[selectedDay] ?? [],
                       barTouchData: BarTouchData(
                         touchTooltipData: BarTouchTooltipData(
                           tooltipBgColor: Colors.blueGrey,
@@ -312,8 +487,7 @@ class _GymDetailPageState extends State<GymDetailPage> {
                       ),
                     ),
                   ),
-                ),
-                // Equipment section
+                ),                // Equipment section
                 Padding(
                   padding: EdgeInsets.only(top: 16),
                   child: Text(

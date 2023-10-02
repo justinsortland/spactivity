@@ -36,6 +36,10 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final initialInstructionsCount = 4;
+    final allInstructions = widget.equipment.instructions;
+    final initialInstructions = allInstructions.take(initialInstructionsCount).toList();
+
     // Access FavoriteEquipmentNotifier using Provider.of
     final favoriteEquipmentNotifier = Provider.of<FavoriteEquipmentNotifier>(context, listen: false);
 
@@ -113,13 +117,90 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
               ),
             ),
           ),
+          // Instructions of Use Section
+          if (widget.equipment.isMachine) 
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, top: 16.0),
+                  child: Text(
+                    'Instructions of Use',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                if (widget.equipment.instructions.length >= 4)
+                  Padding(
+                    padding: EdgeInsets.only(left: 16.0, top: 16.0),
+                    child: Text(
+                      'Scroll down by pressing down on the text',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, top: 16.0),
+                  child: Container(
+                    height: 200,
+                    child: ListView.builder(
+                      physics: ClampingScrollPhysics(),
+                      itemCount: widget.equipment.instructions.length,
+                      itemBuilder: (context, index) {
+                        final step = widget.equipment.instructions[index];
+                        final parts = step.split(':');
+                        if (parts.length == 2) {
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 8.0),
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: parts[0].trim() + ': ',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: parts[1].trim(),
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                    ),                                  
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 8.0),
+                            child: Text(
+                              step.trim(),
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           // "Available At" header
           Padding(
             padding: const EdgeInsets.only(left: 16.0, top: 16.0),
             child: Text(
               'Available At',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -135,7 +216,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
                   margin: EdgeInsets.only(left: 16.0),
                   child: Text(
                     gym.name,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
               );
