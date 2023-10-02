@@ -1,16 +1,9 @@
-# spactivity
+# SPACtivity
 
-A new Flutter project.
+App soon to be available for both iOS and Android which tracks how busy the on-campus gyms on Northwestern University's campus (SPACs, Blomquist, etc.) are
 
-## Getting Started
+Developed using the Dart programming language with the use of the Flutter UI on the Visual Studio Code (VSCode) IDE.
 
-This project is a starting point for a Flutter application.
+Will serve ~4,800 undergraduates students, in addition to local Evanstonians, graduate students, and alumni/faculty of Northwestern University
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+No logo yet! 
