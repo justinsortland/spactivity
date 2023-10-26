@@ -72,6 +72,13 @@ SPACtivity relies on the following libraries to deliver its features:
 
 - **Flutter:** The foundation of the app's cross-platform functionality.
 - **Provider:** For efficient state management.
+- **Cupertino Icons:** A collection of iOS-style icons for the Cupertino (iOS-style) widgets.
+- **Flutter SVG:** A library to render SVG (Scalable Vector Graphics) directly in Flutter.
+- **Instant:** A libary for dealing with instant durations and time calcualations.
+- **FL Chart:** For creating beautiful and interactive charts.
+- **URL Launcher:** Allows launching URLs, making it handy for accessing external content. 
+- **Intl:** For internationalization and date formatting.
+- **Timezone:** Helps manage time zones efficiently.
 
 ## Feedback and Stars
 
