@@ -48,9 +48,9 @@ To run SPACtivity on your local machine, follow these steps:
 - **Customize Settings:** Personalize your experience in the "Settings" page with options such as dark mode, or keep track of your favorite gyms, facilities, and equipment.
 
 ## Screenshots
-<img src="resources/home_screenshot.png" height="400" width="200"> 
-<img src="resources/gym_screenshot.png" height="400" width="200">
-<img src="resources/search_screenshot.png" height="400" width="200">
+<img src="resources/home_screenshot.png" height="450" width="200"> 
+<img src="resources/gym_screenshot.png" height="450" width="200">
+<img src="resources/search_screenshot.png" height="450" width="200">
 
 ## Architecture
 
