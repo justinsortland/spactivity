@@ -1,6 +1,6 @@
 # SPACtivity - Northwestern's Gym Traffic Tracking App
 
-[!License](https://img.shields.io/badge/license-MIT-blue.svg)(LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![GitHub repo size](https://img.shields.io/github/repo-size/justinsortland/SPACtivity)
 ![GitHub issues](https://img.shields.io/github/issues/justinsortland/SPACtivity)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/justinsortland/SPACtivity)
