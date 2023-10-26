@@ -8,10 +8,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: Text(title, style: TextStyle(color: Colors.white)),
-      centerTitle: true,
-      backgroundColor: NorthwesternPurple, // Northwestern Purple
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(10.0),
+        bottomRight: Radius.circular(10.0),
+      ),
+      child: AppBar(
+        title: Text(title, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        backgroundColor: NorthwesternPurple, // Northwestern Purple
+      ),
     );
   }
 

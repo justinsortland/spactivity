@@ -1,9 +1,12 @@
+import 'package:SPACtivity/equipment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'facility.dart';
 import 'favorite_facility_notifier.dart';
 import 'custom_app_bar.dart';
 import 'constants.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class FacilityDetailPage extends StatefulWidget {
   final Facility facility;
@@ -52,6 +55,29 @@ class _FacilityDetailPageState extends State<FacilityDetailPage> {
     }
   }
 
+  // Function to open Apple Maps (iOS) or Google Maps (Android)
+  void openMaps(Facility facility) async {
+
+    // Debug print to check the appleMapsUrl value
+    print('Apple Maps URL: ${facility.appleMapsUrl}');
+    // Debug print to check the appleMapsUrl value
+    print('Google Maps URL: ${facility.googleMapsUrl}');
+
+    // URL for Apple Maps (iOS)
+    final appleMapsUrl = facility.appleMapsUrl;
+
+    // URL for Google Maps (Android)
+    final googleMapsUrl = facility.googleMapsUrl;
+
+    if (await canLaunch(appleMapsUrl)) {
+      await launch(appleMapsUrl);
+    } else if (await canLaunch(googleMapsUrl)) {
+      await launch(googleMapsUrl);
+    } else {
+      throw 'Could not launch maps';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +102,7 @@ class _FacilityDetailPageState extends State<FacilityDetailPage> {
                         onTap: handleFavoriteButtonTap,
                         child: Container(
                           padding: EdgeInsets.symmetric(horizontal: 10),
+                          height: 48,
                           decoration: BoxDecoration(
                             color: NorthwesternPurple,
                             borderRadius: BorderRadius.circular(10),
@@ -89,7 +116,9 @@ class _FacilityDetailPageState extends State<FacilityDetailPage> {
                               ),
                               SizedBox(width: 8),
                               Text(
-                                isFavorite ? 'Favorited' : 'Favorite',
+                                isFavorite 
+                                ? 'Favorited' 
+                                : 'Favorite',
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.white,
@@ -146,7 +175,7 @@ class _FacilityDetailPageState extends State<FacilityDetailPage> {
                 Center( // Center the "See on Map" button
                   child: ElevatedButton(
                     onPressed: () {
-                      // TODO: Implement navigation to the map page
+                      openMaps(widget.facility);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: NorthwesternPurple,

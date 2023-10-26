@@ -2,6 +2,11 @@ import 'gym.dart';
 import 'equipment.dart';
 import 'list_of_equipment.dart';
 
+// Got willard image from willardnu.com on google images
+// Got patten image from wikipedia
+// Got 1838 chicago image from: https://www.google.com/url?sa=i&url=https%3A%2F%2Fnustudentaffairs.smugmug.com%2FNorthwestern-Residences%2F1838-Chicago&psig=AOvVaw1Ez7rPNtNncqSn4wnmhcxf&ust=1698350597879000&source=images&cd=vfe&opi=89978449&ved=0CBIQjhxqFwoTCKCAgpP_kYIDFQAAAAAdAAAAABAI
+// Got walter athletics image from: https://walshwebsiteassets.blob.core.windows.net/sitedocs/imagegallery/news/Ryan_Fieldhouse_Walsh_ABI_006-(low).jpg
+
 final List<Gym> ListOfGyms = [
   Gym(
     id: '0',
@@ -23,6 +28,8 @@ final List<Gym> ListOfGyms = [
     requiresKeycard: false,
     equipmentList: [
       Equipment(id: '0', name: '5 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0'], isMachine: false, instructions: ListOfEquipment[0].instructions,),
+      Equipment(id: '1', name: '10 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0'], isMachine: false, instructions: [],),  
+      Equipment(id: '2', name: '15 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0'], isMachine: false, instructions: [],),  
     ],
     googleMapsUrl: 'https://www.google.com/maps/place/Henry+Crown+Sports+Pavilion/@42.0596373,-87.6729806,17z/data=!3m1!4b1!4m6!3m5!1s0x880fd00b703e4c39:0x509c3569d8eb2a8e!8m2!3d42.0596373!4d-87.6729806!16s%2Fg%2F1hf3_crv1?entry=ttu',
     appleMapsUrl: 'https://maps.apple.com/?address=2311%20Campus%20Dr,%20Evanston,%20IL%20%2060208,%20United%20States&auid=3095236694710247902&ll=42.059497,-87.673409&lsp=9902&q=Henry%20Crown%20Sports%20Pavilion',
@@ -119,6 +126,29 @@ final List<Gym> ListOfGyms = [
       Equipment(id: '0', name: '5 lb Dumbbells', imageURL: 'https://picsum.photos/200', availableAtGyms: ['0'], isMachine: false, instructions: ListOfEquipment[0].instructions,),
     ],
     googleMapsUrl: 'https://www.google.com/maps/place/Willard+Residential+College/@42.0511898,-87.6787722,18.26z/data=!4m6!3m5!1s0x880fda9f4e67066f:0x8a91a058d45f90de!8m2!3d42.0516675!4d-87.6811432!16s%2Fg%2F1tgpt6f0?entry=ttu',
-    appleMapsUrl: '',
+    appleMapsUrl: 'https://maps.apple.com/?address=Northwestern%20University,%201865%20Sherman%20Ave,%20Evanston,%20IL%20%2060201,%20United%20States&auid=7921959845694685636&ll=42.051671,-87.681477&lsp=9902&q=Willard%20Residential%20College',
+  ),
+  Gym(
+    id: '5',
+    name: 'Walter Athletics Center',
+    openingHours: {
+      // Monday to Thursday
+      1: '6:00 AM - 11:00 PM',
+      2: '6:00 AM - 11:00 PM',
+      3: '6:00 AM - 11:00 PM', 
+      4: '6:00 AM - 11:00 PM',
+      // Friday
+      5: '6:00 AM - 10:00 PM',
+      // Saturday
+      6: '8:00 AM - 9:00 PM',
+      // Sunday
+      7: '8:00 AM - 10:00 PM',
+    },
+    image: 'assets/images/walter_athletics_center_image.png',
+    requiresKeycard: true,
+    equipmentList: [
+    ],
+    googleMapsUrl: 'https://www.google.com/maps/place/Walter+Athletics+Center/@42.0592334,-87.6719085,17z/data=!3m1!4b1!4m6!3m5!1s0x880fdbddcff93f59:0x84c823e011cfa67f!8m2!3d42.0592334!4d-87.6719085!16s%2Fg%2F11f9hb5q3k?entry=ttu',
+    appleMapsUrl: 'https://maps.apple.com/?address=2255%20Campus%20Drive,%20Evanston,%20IL%2060208,%20United%20States&auid=5372156225395317761&ll=42.059999,-87.672486&lsp=9902&q=Walter%20Athletics%20Center',
   ),
 ];

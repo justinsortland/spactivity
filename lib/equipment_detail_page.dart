@@ -66,7 +66,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
             height: 200,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(widget.equipment.imageURL),
+                image: AssetImage(widget.equipment.imageURL),
                 fit: BoxFit.cover,
               ),
             ),
@@ -89,6 +89,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
               onTap: handleFavoriteButtonTap,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 48,
                 decoration: BoxDecoration(
                   color: NorthwesternPurple,
                   borderRadius: BorderRadius.circular(10),
@@ -108,6 +109,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
                         ? 'Favorited' 
                         : 'Favorite',
                       style: TextStyle(
+                        fontSize: 18,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -129,6 +131,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      color: LighterPurple,
                     ),
                   ),
                 ),
@@ -202,6 +205,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
+                color: LighterPurple,
               ),
             ),
           ),

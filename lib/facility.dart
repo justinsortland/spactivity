@@ -5,12 +5,16 @@ class Facility {
   final String name;
   final Map<int, String> openingHours;
   final String image;
+  final String googleMapsUrl;
+  final String appleMapsUrl;
 
   Facility({
     required this.id,
     required this.name,
     required this.openingHours,
     required this.image,
+    required this.googleMapsUrl,
+    required this.appleMapsUrl,
   });
 
   String getOpeningHoursForToday() {
@@ -19,17 +23,54 @@ class Facility {
   }
 
   bool isOpenNow(context) {
-    final currentDay = DateTime.now().weekday;
-    final currentTime = TimeOfDay.now().format(context);
+    // Get current day of the week (1: Monday, 2: Tuesday, ... , 7: Sunday)
+    final currentDayOfWeek = DateTime.now().weekday;
 
-    if (openingHours.containsKey(currentDay)) {
-      final openingHourRange = openingHours[currentDay]!.split(' - ');
-      final openingTime = openingHourRange[0];
-      final closingTime = openingHourRange[1];
+    // Get current time in HH:mm format
+    final currentTime = TimeOfDay.now();
 
-      return currentTime.compareTo(openingTime) >= 0 && currentTime.compareTo(closingTime) <= 0;   
+    // Check if gym is open for current day and time
+    if (openingHours.containsKey(currentDayOfWeek)) {
+      final openingHourRange = openingHours[currentDayOfWeek]!.split(' - ');
+      final openingTime = _parseTimeOfDay(openingHourRange[0]);
+      final closingTime = _parseTimeOfDay(openingHourRange[1]);
+
+      final currentTimeAsDateTime = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+        currentTime.hour,
+        currentTime.minute,
+      );
+
+      return currentTimeAsDateTime.isAfter(openingTime) && currentTimeAsDateTime.isBefore(closingTime);
     } else {
+      // The gym is closed on current day
       return false;
     }
+  }
+
+  DateTime _parseTimeOfDay(String timeStr) {
+    final timeParts = timeStr.split(' ');
+    final time = timeParts[0];
+    final isPM = timeParts[1] == 'PM';
+
+    final parts = time.split(':');
+    var hour = int.parse(parts[0]);
+    final minute = int.parse(parts[1]);
+
+    if (isPM && hour != 12) {
+      hour += 12;
+    } else if (!isPM && hour == 12) {
+      hour = 0;
+    }
+
+    return DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+      hour,
+      minute,
+    );
   }
 }

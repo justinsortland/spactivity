@@ -22,6 +22,7 @@ import 'facility.dart';
 import 'facility_detail_page.dart';
 import 'list_of_gyms.dart';
 import 'list_of_equipment.dart';
+import 'page_navigation_notifier.dart';
 
 // Initialize lists 
 final List<Gym> gymList = ListOfGyms;
@@ -32,6 +33,9 @@ void main()  {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => PageNavigationNotifier(),
+        ),
         ChangeNotifierProvider(
           create: (context) => FavoriteEquipmentNotifier(),
         ),
@@ -68,6 +72,9 @@ class SPACtivityApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => PageNavigationNotifier(),
+        ),
         ChangeNotifierProvider(
           create: (context) => FavoriteEquipmentNotifier(),
         ),
@@ -152,6 +159,7 @@ class HomePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    final pageNavigationNotifier = Provider.of<PageNavigationNotifier>(context);
     // return MaterialApp()
     return Scaffold(
       appBar: CustomAppBar(title: 'SPACtivity'),
@@ -177,8 +185,9 @@ class HomePage extends StatelessWidget{
         },
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: 0,
-        onTap: (index) {
+        currentIndex: pageNavigationNotifier.currentIndex,
+        onTap: (index) async {
+          pageNavigationNotifier.setIndex(index);
           // Implement navigation to other pages based on index
           if (index == 0) {
             // Navigate to home page
@@ -193,6 +202,9 @@ class HomePage extends StatelessWidget{
             // Navigate to settings page
             Navigator.pushReplacementNamed(context, '/settings');
           }
+
+          await Future.delayed(Duration(milliseconds: 300));
+          pageNavigationNotifier.setIndex(index);
         },
       ),
     );
@@ -212,51 +224,54 @@ class GymCard extends StatelessWidget {
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
     final backgroundColor = Theme.of(context).cardColor;
 
-    return Card(
-      elevation: 0, // Remove gray shadow
-      color: backgroundColor,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 80,  // Set fixed width for gym image
-              height: 80, // Set fixed height for gym image
-              child: Image.network(
-                gym.image,
-                fit: BoxFit.cover,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10.0),
+      child: Card(
+        elevation: 0, // Remove gray shadow
+        color: backgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 80,  // Set fixed width for gym image
+                height: 80, // Set fixed height for gym image
+                child: Image.asset(
+                  gym.image,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            SizedBox(width: 16),
-            Expanded( // Use Expanded to allow gym name to take up remaining space
-              child: Column(
-                crossAxisAlignment:  CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    gym.name,
-                    style: TextStyle(
-                      fontSize: 22, 
-                      fontWeight: FontWeight.bold,
-                      color: textColor,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    gym.isOpenNow(context) ? 'Open' : 'Closed',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: gym.isOpenNow(context) ? Colors.green : Colors.red,
-                    ),
-                  ),
-                  if (openingHoursForToday != null)
+              SizedBox(width: 16),
+              Expanded( // Use Expanded to allow gym name to take up remaining space
+                child: Column(
+                  crossAxisAlignment:  CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      'Hours today: $openingHoursForToday',
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                      gym.name,
+                      style: TextStyle(
+                        fontSize: 22, 
+                        fontWeight: FontWeight.bold,
+                        color: textColor,
+                      ),
                     ),
-                ],
+                    SizedBox(height: 8),
+                    Text(
+                      gym.isOpenNow(context) ? 'Open' : 'Closed',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: gym.isOpenNow(context) ? Colors.green : Colors.red,
+                      ),
+                    ),
+                    if (openingHoursForToday != null)
+                      Text(
+                        'Hours today: $openingHoursForToday',
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

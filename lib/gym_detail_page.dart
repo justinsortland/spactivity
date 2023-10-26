@@ -53,7 +53,7 @@ class _GymDetailPageState extends State<GymDetailPage> {
 
       // Loop through each hour the gym is open on the current day
       for (var hour = 0; hour <= totalHours; hour++) {
-        final isCurrentHour = currentTime.hour == (openingTime.hour + hour);
+        final isCurrentHour = currentTime.hour == (openingTime.hour + hour) - 1;
         final barGroupData = BarChartGroupData(
           x: hour,
           barRods: [
@@ -109,7 +109,7 @@ class _GymDetailPageState extends State<GymDetailPage> {
   }
 
   String getTimeLabelForIndex(int index) {
-    final List<String> timeLabels = ['5 AM', '6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM', '5 PM', '6 PM', '7 PM', '8 PM', '9 PM', '10 PM', '11 PM'];
+    final List<String> timeLabels = ['5 AM', '8 AM', '11 AM', '2 PM', '5 PM', '8 PM', '11 PM'];
     if (index >= 0 && index < timeLabels.length) {
       return timeLabels[index];
     }
@@ -157,7 +157,7 @@ class _GymDetailPageState extends State<GymDetailPage> {
     }
   }
 
-  // Function to oppen Apple Maps (iOS) or Google Maps (Android)
+  // Function to open Apple Maps (iOS) or Google Maps (Android)
   void openMaps(Gym gym) async {
 
     // Debug print to check the appleMapsUrl value
@@ -203,11 +203,11 @@ class _GymDetailPageState extends State<GymDetailPage> {
                         favoriteGymNotifier.toggleFavorite(widget.gym);
                         // setState(() {});
                       }
-
                       return InkWell(
                         onTap: handleFavoriteButtonTap,
                         child: Container(
                           padding: EdgeInsets.symmetric(horizontal: 10),
+                          height: 48,
                           decoration: BoxDecoration(
                             color: NorthwesternPurple,
                             borderRadius: BorderRadius.circular(10),
@@ -303,6 +303,7 @@ class _GymDetailPageState extends State<GymDetailPage> {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      color: LighterPurple,
                     ),
                   ),
                 ),
@@ -495,6 +496,7 @@ class _GymDetailPageState extends State<GymDetailPage> {
                     style: TextStyle(
                       fontSize: 24, 
                       fontWeight: FontWeight.bold,
+                      color: LighterPurple,
                     ),
                   )
                 ),

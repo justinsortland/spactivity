@@ -80,7 +80,7 @@ class FacilityCard extends StatelessWidget {
             SizedBox(
               width: 80,  // Set fixed width for gym image
               height: 80, // Set fixed height for gym image
-              child: Image.network(
+              child: Image.asset(
                 facility.image,
                 fit: BoxFit.cover,
               ),
