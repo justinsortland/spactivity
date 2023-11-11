@@ -91,6 +91,11 @@ class _FacilityDetailPageState extends State<FacilityDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final currentDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
+    final isSpecialDate = widget.facility.isSpecialDate(currentDate, widget.facility.specialDates);
+    final specialWeekName = widget.facility.getSpecialWeekName(currentDate, widget.facility.specialDates);
+
     return Scaffold(
       appBar: CustomAppBar(title: widget.facility.name),
       body: Builder(
@@ -164,7 +169,7 @@ class _FacilityDetailPageState extends State<FacilityDetailPage> {
                   ),
                   children: [
                     for (int day = 1; day <= 7; day++)
-                      if (widget.facility.openingHours.containsKey(day))
+                      if (!isSpecialDate && widget.facility.openingHours.containsKey(day))
                         ListTile(
                           title: Text(
                             getDayName(day),
@@ -177,8 +182,25 @@ class _FacilityDetailPageState extends State<FacilityDetailPage> {
                             widget.facility.openingHours[day]!,
                             style: TextStyle(fontSize: 16),
                           ),
-                          dense: true,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                          dense: true, // Make the ListTile elements smaller
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16), // Adjust padding
+                        ),
+                    for (int day = 1; day <= 7; day++)
+                      if (isSpecialDate)
+                        ListTile(
+                          title: Text(
+                            getDayName(day),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            widget.facility.specialOpeningHours[specialWeekName]?[day] ?? "",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          dense: true, // Make the ListTile elements smaller
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16), // Adjust padding
                         ),
                   ],
                 ),

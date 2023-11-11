@@ -103,7 +103,7 @@ final List<Gym> ListOfGyms = [
       1: 'Open 24 Hours',
       2: 'Open 24 Hours',
       3: 'Open 24 Hours', 
-      4: 'Open 24 HoursM',
+      4: 'Open 24 Hours',
       // Friday
       5: 'Open 24 Hours',
       // Saturday

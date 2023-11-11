@@ -154,7 +154,7 @@ final SPACSpecialDates = [
   SPACMemorialDayWeek1,
   SPACMemorialDayWeek2,
   SPACMLKWeek,
-  SPACDilloWeek
+  SPACDilloWeek,
 ];
 
 final blomThanksgivingWeek = [
@@ -303,5 +303,26 @@ final blomSpecialDates = [
   blomMemorialDayWeek1,
   blomMemorialDayWeek2,
   blomMLKWeek,
-  blomdDilloWeek
+  blomdDilloWeek,
+];
+
+final aquaticsThanksgivingBreak = [
+  // DateTime(2023, 11, 20), 
+  // DateTime(2023, 11, 21), 
+  // DateTime(2023, 11, 22), 
+  // DateTime(2023, 11, 23), 
+  // DateTime(2023, 11, 24), 
+  // DateTime(2023, 11, 25), 
+  // DateTime(2023, 11, 26) 
+  DateTime(2023, 11, 6), 
+  DateTime(2023, 11, 7), 
+  DateTime(2023, 11, 8), 
+  DateTime(2023, 11, 9), 
+  DateTime(2023, 11, 10), 
+  DateTime(2023, 11, 11), 
+  DateTime(2023, 11, 12)   
+];
+
+final aquaticsSpecialDates = [
+  aquaticsThanksgivingBreak
 ];

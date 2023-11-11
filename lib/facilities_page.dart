@@ -152,6 +152,11 @@ class FacilityCard extends StatelessWidget {
     final openingHoursForToday = facility.openingHours[currentDayOfWeek];
     final backgroundColor = Theme.of(context).cardColor;
 
+    final currentDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now(). day);
+    final isSpecialDate = facility.isSpecialDate(currentDate, facility.specialDates);
+    final specialWeekName = facility.getSpecialWeekName(currentDate, facility.specialDates);
+    final specialOpeningHours = facility.returnSpecialTimeString(currentDate, currentDayOfWeek, facility.specialDates);
+
     return Card(
       elevation: 0, // Remove gray shadow
       color: backgroundColor,
@@ -184,7 +189,13 @@ class FacilityCard extends StatelessWidget {
                       color: facility.isOpenNow(context) ? Colors.green : Colors.red,
                     ),
                   ),
-                  if (openingHoursForToday != null)
+                  if (isSpecialDate && openingHoursForToday != null)
+                      Text(
+                        'Hours today: $specialOpeningHours',
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                  // Otherwise, output normal hours
+                  if (!isSpecialDate && openingHoursForToday != null)
                     Text(
                       'Hours today: $openingHoursForToday',
                       style: TextStyle(fontSize: 16, color: Colors.grey),

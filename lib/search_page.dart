@@ -191,129 +191,140 @@ class _FilterDropdownButtonState extends State<FilterDropdownButton>{
             itemBuilder: (BuildContext context) {
               return [
                 PopupMenuItem(
-                  child: FilterCheckbox(
-                    filter: 'Push',
-                    isChecked: widget.selectedFilters.contains('Push'),
-                    onChanged: (bool? value) {
-                      if (value != null && value) {
-                        selectedFilters.add('Push');
-                      } else {
-                        selectedFilters.remove('Push');
-                      }
-                      widget.onFilterChanged(selectedFilters.isNotEmpty ? selectedFilters : Set<String>());
-                    },
-                  ),
-              ),
-                PopupMenuItem(
-                  child: FilterCheckbox(
-                    filter: 'Pull',
-                    isChecked: widget.selectedFilters.contains('Pull'),
-                    onChanged: (bool? value) {
-                      if (value != null && value) {
-                        selectedFilters.add('Pull');
-                      } else {
-                        selectedFilters.remove('Pull');
-                      }
-                      widget.onFilterChanged(selectedFilters);
-                    },
-                  ),
-                ),
-                PopupMenuItem(
-                  child: FilterCheckbox(
-                    filter: 'Legs',
-                    isChecked: widget.selectedFilters.contains('Legs'),
-                    onChanged: (bool? value) {
-                      if (value != null && value) {
-                        selectedFilters.add('Legs');
-                      } else {
-                        selectedFilters.remove('Legs');
-                      }
-                      widget.onFilterChanged(selectedFilters);
-                    },
-                  ),
-                ),
-                PopupMenuItem(
-                  child: FilterCheckbox(
-                    filter: 'Back',
-                    isChecked: widget.selectedFilters.contains('Back'),
-                    onChanged: (bool? value) {
-                      if (value != null && value) {
-                        selectedFilters.add('Back');
-                      } else {
-                        selectedFilters.remove('Back');
-                      }
-                      widget.onFilterChanged(selectedFilters);
-                    },
-                  ),
-                ),
-                PopupMenuItem(
-                  child: FilterCheckbox(
-                    filter: 'Chest',
-                    isChecked: widget.selectedFilters.contains('Chest'),
-                    onChanged: (bool? value) {
-                      if (value != null && value) {
-                        selectedFilters.add('Chest');
-                      } else {
-                        selectedFilters.remove('Chest');
-                      }
-                      widget.onFilterChanged(selectedFilters);
-                    },
-                  ),
-                ),
-                PopupMenuItem(
-                  child: FilterCheckbox(
-                    filter: 'Core',
-                    isChecked: widget.selectedFilters.contains('Core'),
-                    onChanged: (bool? value) {
-                      if (value != null && value) {
-                        selectedFilters.add('Core');
-                      } else {
-                        selectedFilters.remove('Core');
-                      }
-                      widget.onFilterChanged(selectedFilters);
-                    },
-                  ),
-                ),
-                PopupMenuItem(
-                  child: FilterCheckbox(
-                    filter: 'Cardio',
-                    isChecked: widget.selectedFilters.contains('Cardio'),
-                    onChanged: (bool? value) {
-                      if (value != null && value) {
-                        selectedFilters.add('Cardio');
-                      } else {
-                        selectedFilters.remove('Cardio');
-                      }
-                      widget.onFilterChanged(selectedFilters);
-                    },
-                  ),
-                ),
-                PopupMenuItem(
-                  child: FilterCheckbox(
-                    filter: 'Full Body',
-                    isChecked: widget.selectedFilters.contains('Full Body'),
-                    onChanged: (bool? value) {
-                      if (value != null && value) {
-                        selectedFilters.add('Full Body');
-                      } else {
-                        selectedFilters.remove('Full Body');
-                      }
-                      widget.onFilterChanged(selectedFilters);
-                    },
-                  ),
-                ),
-                PopupMenuItem(
-                  child: FilterCheckbox(
-                    filter: 'Stability',
-                    isChecked: widget.selectedFilters.contains('Stability'),
-                    onChanged: (bool? value) {
-                      if (value != null && value) {
-                        selectedFilters.add('Stability');
-                      } else {
-                        selectedFilters.remove('Stability');
-                      }
-                      widget.onFilterChanged(selectedFilters);
-                    },
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 102),
+                        child: Text(
+                          'Push-Pull',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: LighterPurple,
+                          ),
+                        ),
+                      ),
+                      FilterCheckbox(
+                        filter: 'Push',
+                        isChecked: widget.selectedFilters.contains('Push'),
+                        onChanged: (bool? value) {
+                          if (value != null && value) {
+                            selectedFilters.add('Push');
+                          } else {
+                            selectedFilters.remove('Push');
+                          }
+                          widget.onFilterChanged(selectedFilters.isNotEmpty ? selectedFilters : Set<String>());
+                        },
+                      ),
+                      FilterCheckbox(
+                        filter: 'Pull',
+                        isChecked: widget.selectedFilters.contains('Pull'),
+                        onChanged: (bool? value) {
+                          if (value != null && value) {
+                            selectedFilters.add('Pull');
+                          } else {
+                            selectedFilters.remove('Pull');
+                          }
+                          widget.onFilterChanged(selectedFilters.isNotEmpty ? selectedFilters : Set<String>());
+                        },
+                      ),
+                      SizedBox(height: 8),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 53),
+                        child: Text(
+                          'Muscle Group',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: LighterPurple,
+                          ),
+                        ),
+                      ),
+                      FilterCheckbox(
+                        filter: 'Legs',
+                        isChecked: widget.selectedFilters.contains('Legs'),
+                        onChanged: (bool? value) {
+                          if (value != null && value) {
+                            selectedFilters.add('Legs');
+                          } else {
+                            selectedFilters.remove('Legs');
+                          }
+                          widget.onFilterChanged(selectedFilters.isNotEmpty ? selectedFilters : Set<String>());
+                        },
+                      ),
+                      FilterCheckbox(
+                        filter: 'Back',
+                        isChecked: widget.selectedFilters.contains('Back'),
+                        onChanged: (bool? value) {
+                          if (value != null && value) {
+                            selectedFilters.add('Back');
+                          } else {
+                            selectedFilters.remove('Back');
+                          }
+                          widget.onFilterChanged(selectedFilters.isNotEmpty ? selectedFilters : Set<String>());
+                        },
+                      ),
+                      FilterCheckbox(
+                        filter: 'Chest',
+                        isChecked: widget.selectedFilters.contains('Chest'),
+                        onChanged: (bool? value) {
+                          if (value != null && value) {
+                            selectedFilters.add('Chest');
+                          } else {
+                            selectedFilters.remove('Chest');
+                          }
+                          widget.onFilterChanged(selectedFilters.isNotEmpty ? selectedFilters : Set<String>());
+                        },
+                      ),
+                      FilterCheckbox(
+                        filter: 'Core',
+                        isChecked: widget.selectedFilters.contains('Core'),
+                        onChanged: (bool? value) {
+                          if (value != null && value) {
+                            selectedFilters.add('Core');
+                          } else {
+                            selectedFilters.remove('Core');
+                          }
+                          widget.onFilterChanged(selectedFilters.isNotEmpty ? selectedFilters : Set<String>());
+                        },
+                      ),
+                      FilterCheckbox(
+                        filter: 'Cardio',
+                        isChecked: widget.selectedFilters.contains('Cardio'),
+                        onChanged: (bool? value) {
+                          if (value != null && value) {
+                            selectedFilters.add('Cardio');
+                          } else {
+                            selectedFilters.remove('Cardio');
+                          }
+                          widget.onFilterChanged(selectedFilters.isNotEmpty ? selectedFilters : Set<String>());
+                        },
+                      ),
+                      FilterCheckbox(
+                        filter: 'Full Body',
+                        isChecked: widget.selectedFilters.contains('Full Body'),
+                        onChanged: (bool? value) {
+                          if (value != null && value) {
+                            selectedFilters.add('Full Body');
+                          } else {
+                            selectedFilters.remove('Full Body');
+                          }
+                          widget.onFilterChanged(selectedFilters.isNotEmpty ? selectedFilters : Set<String>());
+                        },
+                      ),
+                      FilterCheckbox(
+                        filter: 'Stability',
+                        isChecked: widget.selectedFilters.contains('Stability'),
+                        onChanged: (bool? value) {
+                          if (value != null && value) {
+                            selectedFilters.add('Stability');
+                          } else {
+                            selectedFilters.remove('Stability');
+                          }
+                          widget.onFilterChanged(selectedFilters.isNotEmpty ? selectedFilters : Set<String>());
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ];
@@ -388,6 +399,7 @@ class _FilterCheckboxState extends State<FilterCheckbox> {
       title: Text(
         widget.filter,
         style: TextStyle(
+          fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -401,5 +413,3 @@ class _FilterCheckboxState extends State<FilterCheckbox> {
     );
   }
 }
-
-  

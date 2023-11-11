@@ -261,3 +261,15 @@ final blomSpecialOpeningHours = {
     7: '8:00 AM - 10:00 PM',
   },
 };
+
+final aquaticsSpecialOpeningHours = {
+  "Thanksgiving Week": {
+    1: '6:00 AM - 7:00 AM | 8:30 AM - 2:00 PM | 4:00 PM - 10:00 PM',
+    2: '6:00 AM - 8:30 AM | 10:30 AM - 2:00 PM | 4:00 PM - 10:00 PM',
+    3: '6:00 AM - 7:00 AM | 8:30 AM - 2:00 PM | 4:00 PM - 7:45 PM',
+    4: 'CLOSED',
+    5: '10:00 AM - 4:00 PM',
+    6: '10:00 AM - 2:00 PM',
+    7: '10:00 AM - 4:00 PM',
+  },
+};

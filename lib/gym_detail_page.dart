@@ -118,7 +118,8 @@ class _GymDetailPageState extends State<GymDetailPage> {
 
       // Loop through each hour the gym is open on the current day
       for (var hour = 0; hour <= totalHours; hour++) {
-        final isCurrentHour = currentTime.hour == (openingTime.hour + hour) - 1;
+        final isCurrentHour = currentTime.hour == (openingTime.hour + hour) - 2;
+        // final isCurrentHour = currentTime.hour == hour;
         final barGroupData = BarChartGroupData(
           x: hour,
           barRods: [
@@ -198,7 +199,18 @@ class _GymDetailPageState extends State<GymDetailPage> {
   }
 
   String getTimeLabelForIndex(int index) {
-    final List<String> timeLabels = ['6 AM', '9 AM', '12 PM', '3 PM', '6 PM', '9 PM', '12 AM'];
+    final openingHours = widget.gym.openingHours[DateTime.now().weekday]!.split(' - ');
+    final openingTime = DateFormat.jm().parse(openingHours[0]);
+
+    List<String> timeLabels = ['6 AM', '9 AM', '12 PM', '3 PM', '6 PM', '9 PM', '12 AM'];
+    if (openingTime.hour == 6) {
+      timeLabels = ['6 AM', '9 AM', '12 PM', '3 PM', '6 PM', '9 PM', '12 AM'];
+    } else if (openingTime.hour == 7) {
+      timeLabels = ['7 AM', '10 AM', '1 PM', '4 PM', '7 PM', '10 PM', '1 AM'];
+    } else {
+      timeLabels = ['8 AM', '11 AM', '12 PM', '5 PM', '8 PM', '11 PM', '2 AM'];
+    } 
+
     if (index >= 0 && index < timeLabels.length) {
       return timeLabels[index];
     }
