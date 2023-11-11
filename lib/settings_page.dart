@@ -40,8 +40,9 @@ class SettingsPage extends StatelessWidget {
               Text(
                 'Settings',
                 style: TextStyle(
-                  fontSize: 24, 
+                  fontSize: 28, 
                   fontWeight: FontWeight.bold,
+                  color: LighterPurple,
                 ),
               ),
               SizedBox(height: 8),
@@ -110,7 +111,8 @@ class SettingsPage extends StatelessWidget {
                 'Favorite Pages', // Placeholder for favorite foods heading
                 style: TextStyle(
                   fontSize: 24,
-                  fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.bold,
+                  color: LighterPurple,
                 ),   
               ),
               Column(

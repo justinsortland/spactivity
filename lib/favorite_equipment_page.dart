@@ -30,26 +30,52 @@ class FavoriteEquipmentPage extends StatelessWidget {
             child: Text(
               'Favorite Equipment',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
+                color: LighterPurple,
               ),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: favoriteEquipmentList.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    favoriteEquipmentList[index].name,
+          if (favoriteEquipmentList.isEmpty)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'You don\'t seem to currently have any favorite equipment!',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                     ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'To add your favorite equipment or machine, click the \'Search\' icon at the bottom bar, tap the specific equipment or machine you want to favorite, and click the \'Favorite\' button.',
                     style: TextStyle(
                       fontSize: 18,
                     ),
                   ),
-                );
-              },
+                ],
+              ),
             ),
-          ),
+          if (favoriteEquipmentList.isNotEmpty) 
+            Expanded(
+              child: ListView.builder(
+                itemCount: favoriteEquipmentList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      favoriteEquipmentList[index].name,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    // Add onTap functionality if needed
+                  );
+                },
+              ),
+            ),
         ],
       ),
     );

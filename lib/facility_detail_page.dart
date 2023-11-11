@@ -6,6 +6,7 @@ import 'favorite_facility_notifier.dart';
 import 'custom_app_bar.dart';
 import 'constants.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'facility_amenities_page.dart';
 
 
 class FacilityDetailPage extends StatefulWidget {
@@ -22,6 +23,16 @@ class FacilityDetailPage extends StatefulWidget {
 }
 
 class _FacilityDetailPageState extends State<FacilityDetailPage> {
+
+  void navigateToAmenitiesPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FacilityAmenitiesPage(facility: widget.facility),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -167,7 +178,7 @@ class _FacilityDetailPageState extends State<FacilityDetailPage> {
                             style: TextStyle(fontSize: 16),
                           ),
                           dense: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
                         ),
                   ],
                 ),
@@ -189,6 +200,59 @@ class _FacilityDetailPageState extends State<FacilityDetailPage> {
                     ),
                   ),
                 ),
+                if (widget.facility.description.isNotEmpty) 
+                  SizedBox(height: 16),
+                if (widget.facility.description.isNotEmpty) 
+                  Padding(
+                    padding: EdgeInsets.only(top: 16),
+                    child: Text(
+                      'Description',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: LighterPurple,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: widget.facility.description
+                        .map((item) => Column(
+                              children: [
+                                Text(
+                                  item,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                SizedBox(height: 12),
+                              ]
+                            ))
+                          .toList(),
+                    ),
+                  ),
+                if (widget.facility.amenities.isNotEmpty) 
+                  SizedBox(height: 16),
+                if (widget.facility.amenities.isNotEmpty) 
+                  Center( // Center the "See on Map" button
+                    child: ElevatedButton(
+                      onPressed: () {
+                        navigateToAmenitiesPage(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: NorthwesternPurple,
+                      ),
+                      child: Text(
+                        'View Amenities',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           );

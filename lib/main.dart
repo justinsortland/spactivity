@@ -1,3 +1,4 @@
+import 'package:SPACtivity/constants.dart';
 import 'package:SPACtivity/dark_mode_notifier.dart';
 import 'package:SPACtivity/list_of_facilities.dart';
 import 'package:SPACtivity/favorite_facility_notifier.dart';
@@ -22,6 +23,7 @@ import 'facility.dart';
 import 'facility_detail_page.dart';
 import 'list_of_gyms.dart';
 import 'list_of_equipment.dart';
+import 'list_of_dates.dart';
 import 'page_navigation_notifier.dart';
 
 // Initialize lists 
@@ -163,26 +165,44 @@ class HomePage extends StatelessWidget{
     // return MaterialApp()
     return Scaffold(
       appBar: CustomAppBar(title: 'SPACtivity'),
-      body: ListView.builder(
-        itemCount: gymList.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GymDetailPage(
-                    gym: gymList[index], 
-                    onDetailPageChanged: (isOnDetailPage) {
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'Gyms',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: LighterPurple,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: gymList.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GymDetailPage(
+                          gym: gymList[index], 
+                          onDetailPageChanged: (isOnDetailPage) {
 
-                    },
-                  ),
-                ),
-              );
-            },
-            child: GymCard(gym: gymList[index], context: context),
-          );
-        },
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  child: GymCard(gym: gymList[index], context: context),
+                );
+              },
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: pageNavigationNotifier.currentIndex,
@@ -224,6 +244,11 @@ class GymCard extends StatelessWidget {
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
     final backgroundColor = Theme.of(context).cardColor;
 
+    final currentDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now(). day);
+    final isSpecialDate = gym.isSpecialDate(currentDate, gym.specialDates);
+    final specialWeekName = gym.getSpecialWeekName(currentDate, gym.specialDates);
+    final specialOpeningHours = gym.returnSpecialTimeString(currentDate, currentDayOfWeek, gym.specialDates);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.0),
       child: Card(
@@ -262,7 +287,13 @@ class GymCard extends StatelessWidget {
                         color: gym.isOpenNow(context) ? Colors.green : Colors.red,
                       ),
                     ),
-                    if (openingHoursForToday != null)
+                    if (isSpecialDate && openingHoursForToday != null)
+                      Text(
+                        'Hours today: $specialOpeningHours',
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    // Otherwise, output normal hours
+                    if (!isSpecialDate && openingHoursForToday != null)
                       Text(
                         'Hours today: $openingHoursForToday',
                         style: TextStyle(fontSize: 16, color: Colors.grey),

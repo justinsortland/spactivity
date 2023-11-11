@@ -1,39 +1,121 @@
+import 'package:SPACtivity/constants.dart';
 import 'package:flutter/material.dart';
 import 'facility.dart'; // Import the Facility model
 import 'facility_detail_page.dart'; // Import the FacilityDetailPage
 import 'custom_app_bar.dart';
 import 'custom_bottom_navigation_bar.dart';
 
-class FacilitiesPage extends StatelessWidget {
+class FacilitiesPage extends StatefulWidget {
   final List<Facility> facilityList;
 
   FacilitiesPage({required this.facilityList});
 
   @override
+  _FacilitiesPageState createState() => _FacilitiesPageState();
+}
+
+class _FacilitiesPageState extends State<FacilitiesPage> {
+  List<Facility> filteredFacilities = [];
+  bool isFilterApplied = false;
+
+  @override
+  void initState() {
+    super.initState();
+    filteredFacilities = List.of(widget.facilityList);
+  }
+
+  void updateFilteredFacilities(String? filter) {
+    if (filter == null) {
+      setState(() {
+        filteredFacilities = List.of(widget.facilityList);
+        isFilterApplied = false; // Clear filter flag
+      });
+    } else {
+      setState(() {
+        filteredFacilities = widget.facilityList
+          .where((facility) => facility.facilityType == filter)
+          .toList();
+        isFilterApplied = true; // Filter has been applied
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: 'Facilities'),
-      body: ListView.builder(
-        itemCount: facilityList.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FacilityDetailPage(
-                    facility: facilityList[index],
-                    onDetailPageChanged: (isOnDetailPage) {
-
-                    },
-                    // You can pass other necessary data here
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Facilities',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: LighterPurple,
                   ),
                 ),
-              );
-            },
-            child: FacilityCard(facility: facilityList[index], context: context),
-          );
-        },
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    FilterDropdownButton(
+                      facilityList: widget.facilityList,
+                      onFilterChanged: updateFilteredFacilities,
+                    ),     
+                    SizedBox(height: 8),
+                    if (isFilterApplied)
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            // Pass null to clear filter
+                            updateFilteredFacilities(null);
+                          });
+                        },
+                        child: Text(
+                          'Clear Filter',
+                          style: TextStyle(
+                            color: LighterPurple,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: filteredFacilities.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FacilityDetailPage(
+                          facility: filteredFacilities[index],
+                          onDetailPageChanged: (isOnDetailPage) {},
+                          // You can pass other necessary data here
+                        ),
+                      ),
+                    );
+                  },
+                  child: FacilityCard(
+                    facility: filteredFacilities[index], 
+                    context: context
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 0,
@@ -109,6 +191,134 @@ class FacilityCard extends StatelessWidget {
                     ),
                 ],
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class FilterDropdownButton extends StatefulWidget {
+  final List<Facility> facilityList;
+  final ValueChanged<String?> onFilterChanged;
+
+  FilterDropdownButton({
+    required this.facilityList,
+    required this.onFilterChanged,
+  });
+
+  @override
+  _FilterDropdownButtonState createState() => _FilterDropdownButtonState();
+}
+
+class _FilterDropdownButtonState extends State<FilterDropdownButton> {
+  String? selectedFilter;
+
+  @override
+  Widget build(BuildContext context) {
+
+    return GestureDetector(
+      onTap: () {
+
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: NorthwesternPurple,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(       
+          children: [
+            PopupMenuButton<String>(
+              icon: Icon(Icons.filter_list, color: Colors.white, size: 24),
+              onSelected: (String value) {
+                // Implement filtering logic
+                setState(() {
+                  selectedFilter = value;
+                  widget.onFilterChanged(selectedFilter);
+                });
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                    value: 'beach',
+                    child: Text(
+                      'Beach 🏖️',
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'tennis',
+                    child: Text(
+                      'Tennis 🎾',
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'basketball',
+                    child: Text(
+                      'Basketball 🏀',
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'field',
+                    child: Text(
+                      'Field 🌾',
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'food',
+                    child: Text(
+                      'Food 🍔',
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'training',
+                    child: Text(
+                      'Training 🏋️',
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'swimming',
+                    child: Text(
+                      'Swimming 🌊',
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'baseball',
+                    child: Text(
+                      'Baseball ⚾',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'wrestling',
+                    child: Text(
+                      'Wrestling 💪',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'golf',
+                    child: Text(
+                      'Golf ⛳',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'wellness',
+                    child: Text(
+                      'Wellness 🏥',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ];
+              },
             ),
           ],
         ),

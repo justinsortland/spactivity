@@ -7,6 +7,9 @@ class Facility {
   final String image;
   final String googleMapsUrl;
   final String appleMapsUrl;
+  final String facilityType;
+  final List<String> description;
+  final List<String> amenities;
 
   Facility({
     required this.id,
@@ -15,6 +18,9 @@ class Facility {
     required this.image,
     required this.googleMapsUrl,
     required this.appleMapsUrl,
+    required this.facilityType,
+    required this.description,
+    required this.amenities,
   });
 
   String getOpeningHoursForToday() {
@@ -30,7 +36,7 @@ class Facility {
     final currentTime = TimeOfDay.now();
 
     // Check if gym is open for current day and time
-    if (openingHours.containsKey(currentDayOfWeek)) {
+    if (openingHours.containsKey(currentDayOfWeek) && openingHours[currentDayOfWeek] != "CLOSED") {
       final openingHourRange = openingHours[currentDayOfWeek]!.split(' - ');
       final openingTime = _parseTimeOfDay(openingHourRange[0]);
       final closingTime = _parseTimeOfDay(openingHourRange[1]);
@@ -44,6 +50,9 @@ class Facility {
       );
 
       return currentTimeAsDateTime.isAfter(openingTime) && currentTimeAsDateTime.isBefore(closingTime);
+
+    } else if (openingHours[currentDayOfWeek] == "CLOSED") {
+      return false;
     } else {
       // The gym is closed on current day
       return false;

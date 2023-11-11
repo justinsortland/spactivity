@@ -29,27 +29,52 @@ class FavoriteFacilityPage extends StatelessWidget {
             child: Text(
               'Favorite Facilities',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
+                color: LighterPurple,
               ),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: favoriteFacilityList.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    favoriteFacilityList[index].name,
+          if (favoriteFacilityList.isEmpty)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'You don\'t seem to currently have any favorite facilities!',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                     ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'To add your favorite facilities, click the \'Facilities\' icon at the bottom bar, tap the specific facility you want to favorite, and click the \'Favorite\' button.',
                     style: TextStyle(
                       fontSize: 18,
                     ),
                   ),
-                  // Add onTap functionality if needed
-                );
-              },
+                ],
+              ),
             ),
-          ),
+          if (favoriteFacilityList.isNotEmpty) 
+            Expanded(
+              child: ListView.builder(
+                itemCount: favoriteFacilityList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      favoriteFacilityList[index].name,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    // Add onTap functionality if needed
+                  );
+                },
+              ),
+            ),
         ],
       ),
     );

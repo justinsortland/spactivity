@@ -4,6 +4,10 @@ import 'package:SPACtivity/favorite_equipment_notifier.dart';
 import 'package:flutter/material.dart';
 import 'equipment.dart';
 import 'gym.dart';
+import 'dart:ui' as ui;
+import 'dart:async';
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
 
 class EquipmentDetailPage extends StatefulWidget {
   final Equipment equipment; // Name of equipment
@@ -36,9 +40,6 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final initialInstructionsCount = 4;
-    final allInstructions = widget.equipment.instructions;
-    final initialInstructions = allInstructions.take(initialInstructionsCount).toList();
 
     // Access FavoriteEquipmentNotifier using Provider.of
     final favoriteEquipmentNotifier = Provider.of<FavoriteEquipmentNotifier>(context, listen: false);
@@ -52,6 +53,14 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
       setState(() {}); // Rebuild widget to reflect updated favorite status
     }
 
+    Image image = Image.network(widget.equipment.imageURL);
+    Completer<ui.Image> completer = Completer<ui.Image>();
+    image.image
+      .resolve(ImageConfiguration())
+      .addListener(
+        ImageStreamListener(
+          (ImageInfo info, bool _) => completer.complete(info.image)));
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.equipment.name),
@@ -61,64 +70,69 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Image of the equipment
-          Container(
-            width: double.infinity,
-            height: 200,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(widget.equipment.imageURL),
-                fit: BoxFit.cover,
+          SizedBox(height: 2),
+          Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.asset(
+                  widget.equipment.imageURL,
+                  fit: BoxFit.cover,
               ),
             ),
           ),
           // Name of the equipment as a header
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              widget.equipment.name,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                widget.equipment.name,
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
+          ), 
           // Favorite button with heart icon
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: InkWell(
-              onTap: handleFavoriteButtonTap,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                height: 48,
-                decoration: BoxDecoration(
-                  color: NorthwesternPurple,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      isFavorite 
-                        ? Icons.favorite 
-                        : Icons.favorite_border, // Check if equipment is favorite
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      isFavorite 
-                        ? 'Favorited' 
-                        : 'Favorite',
-                      style: TextStyle(
-                        fontSize: 18,
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: InkWell(
+                onTap: handleFavoriteButtonTap,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: NorthwesternPurple,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        isFavorite 
+                          ? Icons.favorite 
+                          : Icons.favorite_border, // Check if equipment is favorite
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 8),
+                      Text(
+                        isFavorite 
+                          ? 'Favorited' 
+                          : 'Favorite',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
+          SizedBox(height: 16),
           // Instructions of Use Section
           if (widget.equipment.isMachine) 
             Column(
@@ -199,7 +213,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
             ),
           // "Available At" header
           Padding(
-            padding: const EdgeInsets.only(left: 16.0, top: 16.0),
+            padding: const EdgeInsets.only(left: 16.0, top: 6.0),
             child: Text(
               'Available At',
               style: TextStyle(

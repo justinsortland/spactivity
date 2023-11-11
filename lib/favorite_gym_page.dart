@@ -29,26 +29,52 @@ class FavoriteGymPage extends StatelessWidget {
             child: Text(
               'Favorite Gyms',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
+                color: LighterPurple,
               ),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: favoriteGymNotifier.favoriteGyms.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    favoriteGymList[index].name,
+          if (favoriteGymList.isEmpty)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'You don\'t seem to currently have any favorite gyms!',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                     ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'To add your favorite gyms, click the \'Home\' icon at the bottom bar, tap the specific gym you want to favorite, and click the \'Favorite\' button.',
                     style: TextStyle(
                       fontSize: 18,
                     ),
-                  ), 
-                );
-              },
+                  ),
+                ],
+              ),
             ),
-          ),
+          if (favoriteGymList.isNotEmpty) 
+            Expanded(
+              child: ListView.builder(
+                itemCount: favoriteGymList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      favoriteGymList[index].name,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    // Add onTap functionality if needed
+                  );
+                },
+              ),
+            ),
         ],
       ),
     );
