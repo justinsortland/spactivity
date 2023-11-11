@@ -85,8 +85,8 @@ SPACtivity relies on the following libraries to deliver its features:
 - **Intl:** For internationalization and date formatting.
 - **Timezone:** Helps manage time zones efficiently.
 
-## Feedback and Stars
+## Feedback
 
-We'd love to hear your feedback and appreciate if you find this project helpful. Please consider giving it a star if you like it.
+We'd love to hear your feedback and appreciate if you find this project helpful. 
 
 No logo yet! 
